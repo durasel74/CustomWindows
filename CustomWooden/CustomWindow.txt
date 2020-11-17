@@ -1,0 +1,396 @@
+﻿<!--Import: xmlns:sys="clr-namespace:System;assembly=mscorlib"-->
+<!--#region Custom window-->
+    <!--Add an icon from the folder to the application properties-->
+    <!--Icons must be specified as resources-->
+    <Window.Resources>
+        <!--#region Window settings-->
+
+        <!--#region Chrome colors-->
+        <SolidColorBrush x:Key="WindowTitleColor" Color="#d9b598"/>
+        <SolidColorBrush x:Key="WindowTitleFontColor" Color="#333"/>
+        <SolidColorBrush x:Key="DeactiveTitleFontColor" Color="#99775d"/>
+        <!--#endregion-->
+
+        <!--#region Border effects-->
+        <Thickness x:Key="WindowBorderThickness">5</Thickness>
+        <SolidColorBrush x:Key="WindowBorderColor" Color="#bf9573"/>
+        <DropShadowEffect x:Key="WindowRadiance" ShadowDepth="0" 
+            BlurRadius="15" Color="Black" />
+        <!--#endregion-->
+
+        <!--#region Control buttons colors-->
+        <SolidColorBrush x:Key="ButtonEnterExitColor" Color="#80634d" Opacity="0.6"/>
+        <SolidColorBrush x:Key="ButtonClickExitColor" Color="#d9b598"/>
+        <SolidColorBrush x:Key="ButtonFontEnterExitColor" Color="#d9b598"/>
+        <SolidColorBrush x:Key="ButtonFontClickExitColor" Color="#80634d"/>
+
+        <SolidColorBrush x:Key="ButtonEnterColor" Color="#80634d" Opacity="0.6"/>
+        <SolidColorBrush x:Key="ButtonClickColor" Color="#d9b598"/>
+        <SolidColorBrush x:Key="ButtonFontEnterColor" Color="#d9b598"/>
+        <SolidColorBrush x:Key="ButtonFontClickColor" Color="#80634d"/>
+        <!--#endregion-->
+
+        <!--#region Margins-->
+        <Thickness x:Key="StateNormal">10</Thickness>
+        <Thickness x:Key="StateMaximize">1,-4,1,3</Thickness>
+        <!--#endregion-->
+
+        <!--#region Control button icons-->
+        <Geometry x:Key="ExitButton">M0,1 L9,10 M0,10 L9,1</Geometry>
+        <Geometry x:Key="MaximizeButtonNormal">
+            M1,1 L1,10 M1,10 L10,10 M10,10 L10,1 M10,1 L1,1</Geometry>
+        <Geometry x:Key="MaximizeButtonMaximized">
+            M1,3 L1,10 M1,10 L8,10 M8,10 L8,3 M8,3 L1,3 
+            M3,3 L3,1 M3,1 L10,1 M10,1 L10,8 M10,8 L9,8</Geometry>
+        <Geometry x:Key="HideButton">M0,0 L10,0</Geometry>
+        <!--#endregion-->
+
+        <!--#region Misc-->
+        <ImageSource x:Key="IconSource">\CustomWooden\WoodenIconT.ico</ImageSource>
+        <sys:Double x:Key="CaptionHeight">35</sys:Double>
+        <Thickness x:Key="ResizeBorderThicknessNormal">10</Thickness>
+        <Thickness x:Key="ResizeBorderThicknessMaximize">0</Thickness>
+        <Thickness x:Key="ResizeBorderThickness">10</Thickness>
+        <!--#endregion-->
+
+        <!--#endregion-->
+
+        <!--#region Exit Button-->
+        <Style x:Key="_ExitButton">
+            <Setter Property="Button.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+
+                        <!--#region Appearance-->
+                        <Grid>
+                            <Border x:Name="FieldE" BorderThickness="0">
+                                <Rectangle HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch" 
+                                    Fill="Transparent" />
+                            </Border>
+                            <Path x:Name="FontE" HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{StaticResource ExitButton}"
+                                Stroke="{TemplateBinding Foreground}"  
+                                StrokeThickness="1"/>
+                        </Grid>
+                        <!--#endregion-->
+
+                        <!--#region Triggers-->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="FieldE" 
+                                    Property="Background" 
+                                    Value="{StaticResource ButtonEnterExitColor}"/>
+                                <Setter TargetName="FontE" Property="Stroke" 
+                                    Value="{StaticResource ButtonFontEnterExitColor}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseDirectlyOver" 
+                                Value="true">
+                                <Setter TargetName="FieldE" 
+                                    Property="Background" 
+                                    Value="{StaticResource ButtonClickExitColor}"/>
+                                <Setter TargetName="FontE" Property="Stroke" 
+                                    Value="{StaticResource ButtonFontClickExitColor}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                        <!--#endregion-->
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--#endregion-->
+
+        <!--#region Maximize Button-->
+        <Style x:Key="_MaximizeButton">
+            <Setter Property="Button.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+
+                        <!--#region Appearance-->
+                        <Grid>
+                            <Border x:Name="FieldM" BorderThickness="0"
+                                BorderBrush="{TemplateBinding BorderBrush}">
+                                <Rectangle HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch" 
+                                    Fill="Transparent"/>
+                            </Border>
+                            <Path x:Name="FontM" HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{StaticResource MaximizeButtonNormal}"
+                                Stroke="{TemplateBinding Foreground}" 
+                                StrokeThickness="1"/>
+                        </Grid>
+                        <!--#endregion-->
+
+                        <!--#region Triggers-->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="FieldM" 
+                                    Property="Background" 
+                                    Value="{StaticResource ButtonEnterColor}"/>
+                                <Setter TargetName="FontM" Property="Stroke" 
+                                    Value="{StaticResource ButtonFontEnterColor}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseDirectlyOver" 
+                                Value="true">
+                                <Setter TargetName="FieldM" 
+                                    Property="Background" 
+                                    Value="{StaticResource ButtonClickColor}"/>
+                                <Setter TargetName="FontM" Property="Stroke" 
+                                    Value="{StaticResource ButtonFontClickColor}"/>
+                            </Trigger>
+                            <DataTrigger Binding="{Binding ElementName=FieldM, 
+                                Path=BorderBrush}" Value="Black">
+                                <Setter TargetName="FontM" Property="Data" 
+                                    Value="{StaticResource MaximizeButtonMaximized}"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                        <!--#endregion-->
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--#endregion-->
+
+        <!--#region Hide Button-->
+        <Style x:Key="_HideButton">
+            <Setter Property="Button.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+
+                        <!--#region Appearance-->
+                        <Grid>
+                            <Border x:Name="FieldH" BorderThickness="0">
+                                <Rectangle HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch" 
+                                    Fill="Transparent"  />
+                            </Border>
+                            <Path x:Name="FontH" HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{StaticResource HideButton}"
+                                Stroke="{TemplateBinding Foreground}" 
+                                StrokeThickness="1"/>
+                        </Grid>
+                        <!--#endregion-->
+
+                        <!--#region Triggers-->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="FieldH" 
+                                    Property="Background" 
+                                    Value="{StaticResource ButtonEnterColor}"/>
+                                <Setter TargetName="FontH" Property="Stroke" 
+                                    Value="{StaticResource ButtonFontEnterColor}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseDirectlyOver" 
+                                Value="true">
+                                <Setter TargetName="FieldH" 
+                                    Property="Background" 
+                                    Value="{StaticResource ButtonClickColor}"/>
+                                <Setter TargetName="FontH" Property="Stroke" 
+                                    Value="{StaticResource ButtonFontClickColor}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                        <!--#endregion-->
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--#endregion-->
+
+        <!--#region Fix elements-->
+        <Style TargetType="Canvas">
+            <Setter Property="ClipToBounds" Value="True"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+        <!--#endregion-->
+
+    </Window.Resources>
+
+    <!--#region Window-->
+    <Window.Style>
+        <Style TargetType="Window">
+            <!--#region Default setting-->
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Foreground" 
+                Value="{StaticResource WindowTitleFontColor}"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="AllowsTransparency" Value="True"/>
+            <Setter Property="WindowStyle" Value="None" />
+            <Setter Property="Title" Value="Custom"/>
+            <Setter Property="MinWidth" Value="200" />
+            <Setter Property="MinHeight" Value="50" />
+            <Setter Property="Width" Value="860"/>
+            <Setter Property="Height" Value="500"/>
+            <Setter Property="Background" Value="DarkGray"/>
+            <!--#endregion-->
+
+            <!--#region Chrome settings-->
+            <Setter Property="WindowChrome.WindowChrome">
+                <Setter.Value>
+                    <WindowChrome x:Name="WindowChrome" 
+                        GlassFrameThickness="0" CornerRadius="0" 
+                        ResizeBorderThickness="{DynamicResource ResizeBorderThickness}" 
+                        CaptionHeight="{DynamicResource CaptionHeight}"/>
+                </Setter.Value>
+            </Setter>
+            <!--#endregion-->
+
+            <!--#region Redefining the window template-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Window">
+
+                        <!--#region Window-->
+                        <Border BorderThickness="0" Background="Transparent">
+                            <Grid x:Name="_invisibleSeparator" 
+                             Margin="{StaticResource StateNormal}"
+                             Background="Transparent">
+
+                                <!--#region Glow-->
+                                <Border x:Name="Border1" 
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    Background="{TemplateBinding BorderBrush}"
+                                    Effect="{StaticResource WindowRadiance}"/>
+                                <!--#endregion-->
+
+                                <!--#region Border and content-->
+                                <Border BorderThickness="{StaticResource WindowBorderThickness}" 
+                                    BorderBrush="{StaticResource WindowBorderColor}"
+                                    Background="{StaticResource WindowBorderColor}"
+                                    Margin="-1,-1,0,0">
+
+                                    <!--#region Content-->
+                                    <Border Background="{TemplateBinding Background}">
+                                        <Grid>
+
+                                            <!--#region Title-->
+                                            <Border Background="{StaticResource WindowTitleColor}" 
+                                                Height="30" VerticalAlignment="Top">
+                                                <Grid>
+
+                                                    <!--#region Title stack-->
+                                                    <StackPanel x:Name="TitleElements"
+                                                        HorizontalAlignment="Left"
+                                                        Orientation="Horizontal"
+                                                        UseLayoutRounding="True"
+                                                        Margin="6,0,0,0">
+
+                                                        <!--#region Icon-->
+                                                        <Image Source="{StaticResource IconSource}"
+                                                            HorizontalAlignment="Left" 
+                                                            VerticalAlignment="Center"
+                                                            Width="16" Height="16"/>
+                                                        <!--#endregion-->
+
+                                                        <!--#region Text-->
+                                                        <TextBlock Text="{TemplateBinding Title}"
+                                                            Foreground="{TemplateBinding Foreground}"
+                                                            HorizontalAlignment="Left" 
+                                                            VerticalAlignment="Center"
+                                                            Margin="4,0,0,0"/>
+                                                        <!--#endregion-->
+
+                                                    </StackPanel>
+                                                    <!--#endregion-->
+
+                                                    <!--#region Control buttons stack-->
+                                                    <StackPanel x:Name="ControlButtonsElements"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Stretch"
+                                                        Orientation="Horizontal"
+                                                        UseLayoutRounding="True"
+                                                        Margin="0,0,0,1">
+
+                                                        <!--#region Hide button-->
+                                                        <Button Style="{StaticResource _HideButton}"
+                                                            WindowChrome.IsHitTestVisibleInChrome="True"
+                                                            x:Name="HideBtn"
+                                                            Width="45"
+                                                            Foreground="{TemplateBinding Foreground}"
+                                                            Click="HideClick"/>
+                                                        <!--#endregion-->
+
+                                                        <!--#region Maximize button-->
+                                                        <Button Style="{StaticResource 
+                                                            _MaximizeButton}"
+                                                            WindowChrome.IsHitTestVisibleInChrome="True"
+                                                            x:Name="MaxBtn"
+                                                            Width="47"
+                                                            Foreground="{TemplateBinding Foreground}"
+                                                            Click="MaximizedClick"/>
+                                                        <!--#endregion-->
+
+                                                        <!--#region Exit button-->
+                                                        <Button Style="{StaticResource 
+                                                            _ExitButton}" 
+                                                            WindowChrome.IsHitTestVisibleInChrome="True"
+                                                            x:Name="ExitBtn"
+                                                            Width="49"
+                                                            Foreground="{TemplateBinding Foreground}"
+                                                            Click="ExitClick"/>
+                                                        <!--#endregion-->
+
+                                                    </StackPanel>
+                                                    <!--#endregion-->
+
+                                                </Grid>
+                                            </Border>
+                                            <!--#endregion-->
+
+                                            <!--#region Content presenter-->
+                                            <AdornerDecorator>
+                                                <ContentPresenter 
+                                                    x:Name="ContentPresenter" 
+                                                    Margin="0,30,0,0"/>
+                                            </AdornerDecorator>
+                                            <!--#endregion-->
+
+                                        </Grid>
+                                    </Border>
+                                    <!--#endregion-->
+
+                                </Border>
+                                <!--#endregion-->
+
+                            </Grid>
+                        </Border>
+                        <!--#endregion-->
+
+                        <!--#region Triggers-->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="WindowState" Value="Maximized">
+                                <Setter TargetName="_invisibleSeparator"
+                                    Property="Margin" 
+                                    Value="{StaticResource StateMaximize}"/>
+                                <Setter TargetName="TitleElements" 
+                                    Property="Margin"
+                                    Value="3,5,0,0"/>
+                                <Setter TargetName="ControlButtonsElements" 
+                                    Property="Margin"
+                                    Value="0,6,0,2"/>
+                                <Setter TargetName="MaxBtn" 
+                                    Property="BorderBrush" Value="Black"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                        <!--#endregion-->
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <!--#endregion-->
+        </Style>
+    </Window.Style>
+    <!--#endregion-->
+
+    <!--#endregion-->
